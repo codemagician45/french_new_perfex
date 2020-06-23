@@ -19,6 +19,7 @@
                             _l( 'reminder_date'),
                             _l( 'reminder_staff'),
                             _l( 'reminder_is_notified'),
+                            _l( 'reminder_status'),
                             ), 'reminders'); ?>
                     </div>
                 </div>

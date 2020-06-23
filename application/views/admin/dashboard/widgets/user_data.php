@@ -113,6 +113,7 @@
                         _l( 'reminder_related'),
                         _l('reminder_description'),
                         _l( 'reminder_date'),
+                        // _l( 'reminder_status'),
                         ), 'my-reminders'); ?>
                   </div>
                   <?php if(is_staff_member()){ ?>

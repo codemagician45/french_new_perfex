@@ -358,6 +358,8 @@ function app_init_admin_sidebar_menu_items()
                     'position' => 20,
             ]);
 
+        
+
         $CI->app_menu->add_setup_menu_item('finance', [
                     'collapse' => true,
                     'name'     => _l('acs_finance'),
@@ -435,7 +437,12 @@ function app_init_admin_sidebar_menu_items()
                           'name'     => 'API',
                           'position' => 65,
                   ]);*/
-
+        $CI->app_menu->add_setup_menu_item('reminders_status', [
+                    'href'     => admin_url('misc/reminder_statuses'),
+                    // 'href'     => admin_url('leads/reminder_status'),
+                    'name'     => _l('acs_reminders_status'),
+                    'position' => 60,
+            ]);          
     }
 
     if (has_permission('settings', '', 'view')) {

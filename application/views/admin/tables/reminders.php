@@ -52,8 +52,11 @@ foreach ($rResult as $aRow) {
         } elseif ($aColumns[$i] == 'date') {
             $_data = _dt($_data);
         }
+        $_data.='aaa';
         $row[] = $_data;
+        
     }
+    // print_r($row); exit();
     $row['DT_RowClass'] = 'has-row-options';
     $output['aaData'][] = $row;
 }

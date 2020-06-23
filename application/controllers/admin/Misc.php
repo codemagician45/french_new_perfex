@@ -283,6 +283,67 @@ class Misc extends AdminController
                 ]);
         }
     }
+/*reminder statuses*/
+    public function reminder_statuses()
+    {
+        if (!is_admin()) {
+            access_denied('Leads Statuses');
+        }
+        $data['statuses'] = $this->misc_model->get_reminder_status();
+        $data['title']    = 'Reminders statuses';
+        $this->load->view('admin/reminders/manage_statuses', $data);
+    }
+
+    public function reminder_status()
+    {
+        // if (!is_admin() && get_option('staff_members_create_inline_lead_status') == '0') {
+        if (!is_admin()) {
+            access_denied('Reminders Statuses');
+        }
+        if ($this->input->post()) {
+            $data = $this->input->post();
+            if (!$this->input->post('id')) {
+                $inline = isset($data['inline']);
+                if (isset($data['inline'])) {
+                    unset($data['inline']);
+                }
+                $id = $this->misc_model->add_reminder_status($data);
+                if (!$inline) {
+                    if ($id) {
+                        set_alert('success', _l('added_successfully', _l('reminder_status')));
+                    }
+                } else {
+                    echo json_encode(['success' => $id ? true : fales, 'id' => $id]);
+                }
+            } else {
+                $id = $data['id'];
+                unset($data['id']);
+                $success = $this->misc_model->update_reminder_status($data, $id);
+                if ($success) {
+                    set_alert('success', _l('updated_successfully', _l('reminder_status')));
+                }
+            }
+        }
+    }
+
+    public function delete_reminder_status($id)
+    {
+        if (!is_admin()) {
+            access_denied('Reminders Statuses');
+        }
+        if (!$id) {
+            redirect(admin_url('misc/reminder_statuses'));
+        }
+        $response = $this->misc_model->delete_reminder_status($id);
+        if (is_array($response) && isset($response['referenced'])) {
+            set_alert('warning', _l('is_referenced', _l('reminder_status_lowercase')));
+        } elseif ($response == true) {
+            set_alert('success', _l('deleted', _l('reminder_status')));
+        } else {
+            set_alert('warning', _l('problem_deleting', _l('reminder_status_lowercase')));
+        }
+        redirect(admin_url('misc/reminder_statuses'));
+    }
 
     public function run_cron_manually()
     {

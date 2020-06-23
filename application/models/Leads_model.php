@@ -734,7 +734,7 @@ class Leads_model extends App_Model
         }
 
         $statuses = $this->app_object_cache->get('leads-all-statuses');
-
+        
         if (!$statuses) {
             $this->db->order_by('statusorder', 'asc');
 

@@ -18,7 +18,7 @@ $aColumns = [
     db_prefix() . 'reminders.date',
     'CONCAT(firstname, " ", lastname) as full_name',
     'isnotified',
-
+    db_prefix().'reminders.status'
     ];
 
 $sIndexColumn = 'id';
@@ -50,6 +50,9 @@ $result = data_tables_init($aColumns, $sIndexColumn, $sTable, $join, $where, [
 
 $output  = $result['output'];
 $rResult = $result['rResult'];
+// print_r($rResult);
+// print_r($aColumns);
+//  exit();
 foreach ($rResult as $aRow) {
     $row = [];
     for ($i = 0; $i < count($aColumns); $i++) {
@@ -83,10 +86,10 @@ foreach ($rResult as $aRow) {
                 $_data = _l('reminder_is_notified_boolean_no');
             }
         }
-
         $row[] = $_data;
-    }
 
+    }
+    // print_r($row); exit();
 
     $row['DT_RowClass'] = 'has-row-options';
     $output['aaData'][] = $row;

@@ -269,6 +269,86 @@ class Misc_model extends App_Model
         return false;
     }
 
+    public function get_reminder_status($id = '', $where = [])
+    {
+        $this->db->where($where);
+        if (is_numeric($id)) {
+            $this->db->where('id', $id);
+
+            return $this->db->get(db_prefix() . 'reminders_status')->row();
+        }
+
+        $statuses = $this->app_object_cache->get('reminders-all-statuses');
+
+        if (!$statuses) {
+            $this->db->order_by('statusorder', 'asc');
+
+            $statuses = $this->db->get(db_prefix() . 'reminders_status')->result_array();
+            $this->app_object_cache->add('reminders-all-statuses', $statuses);
+        }
+
+        return $statuses;
+    }
+
+    public function add_reminder_status($data)
+    {
+        if (isset($data['color']) && $data['color'] == '') {
+            $data['color'] = hooks()->apply_filters('default_reminder_status_color', '#757575');
+        }
+
+        if (!isset($data['statusorder'])) {
+            $data['statusorder'] = total_rows(db_prefix() . 'reminders_status') + 1;
+        }
+
+        $this->db->insert(db_prefix() . 'reminders_status', $data);
+        $insert_id = $this->db->insert_id();
+        if ($insert_id) {
+            log_activity('New Reminders Status Added [StatusID: ' . $insert_id . ', Name: ' . $data['name'] . ']');
+
+            return $insert_id;
+        }
+
+        return false;
+    }
+
+    public function update_reminder_status($data, $id)
+    {
+        $this->db->where('id', $id);
+        $this->db->update(db_prefix() . 'reminders_status', $data);
+        if ($this->db->affected_rows() > 0) {
+            log_activity('Reminders Status Updated [StatusID: ' . $id . ', Name: ' . $data['name'] . ']');
+
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public function delete_reminder_status($id)
+    {
+        // $current = $this->get_status($id);
+        // Check if is already using in table
+        // if (is_reference_in_table('status', db_prefix() . 'reminders', $id) || is_reference_in_table('lead_status', db_prefix() . 'leads_email_integration', $id)) {
+        //     return [
+        //         'referenced' => true,
+        //     ];
+        // }
+
+        $this->db->where('id', $id);
+        $this->db->delete(db_prefix() . 'reminders_status');
+        if ($this->db->affected_rows() > 0) {
+            if (get_option('Reminders_default_status') == $id) {
+                update_option('Reminders_default_status', '');
+            }
+            log_activity('Reminders Status Deleted [StatusID: ' . $id . ']');
+
+            return true;
+        }
+
+        return false;
+    }
+
     public function get_notes($rel_id, $rel_type)
     {
         $this->db->join(db_prefix() . 'staff', db_prefix() . 'staff.staffid=' . db_prefix() . 'notes.addedfrom');

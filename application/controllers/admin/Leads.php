@@ -1273,4 +1273,5 @@ class Leads extends AdminController
             set_alert('success', _l('total_leads_deleted', $total_deleted));
         }
     }
+
 }

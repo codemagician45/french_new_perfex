@@ -8,7 +8,7 @@ $has_permission_delete = has_permission('leads', '', 'delete');
 $custom_fields         = get_table_custom_fields('leads');
 $consentLeads          = get_option('gdpr_enable_consent_for_leads');
 $statuses              = $this->ci->leads_model->get_status();
-
+// print_r($statuses); exit();
 $aColumns = [
     '1',
     db_prefix() . 'leads.id as id',

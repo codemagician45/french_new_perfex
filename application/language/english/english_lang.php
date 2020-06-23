@@ -3627,3 +3627,16 @@ $lang['schedule_email_for']             = 'Schedule Email for %s';
 $lang['schedule_date']                  = 'When would you like to send the email?';
 $lang['email_scheduled_successfully']   = 'Email scheduled successfully';
 $lang['invoice_will_be_sent_at']        = 'Invoice will be sent at %s';
+
+
+// Added By Raffale
+$lang['acs_reminders_status']        = 'Reminder Status';
+$lang['reminder_new_status']        = 'New Reminder Status';
+$lang['reminders_status_add_edit_name']        = 'Status Name';
+$lang['reminders_status_color']        = 'Color';
+$lang['reminders_status_add_edit_order']        = 'Order';
+$lang['reminders_status_table_name']        = 'Status Name';
+$lang['reminder_status']        = 'Status';
+$lang['reminders_table_total']        = 'Total Reminders: %s';
+$lang['reminder_status_lowercase']        = 'reminder status';
+

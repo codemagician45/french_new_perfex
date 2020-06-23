@@ -178,7 +178,7 @@ $(function() {
     appValidateForm($('.client-form'), vRules);
 
     if(typeof(customer_id) == 'undefined'){
-        $('#company').on('blur', function() {
+        $('#company').on('keyup', function() {
             var company = $(this).val();
             var $companyExistsDiv = $('#company_exists_info');
 
@@ -194,12 +194,43 @@ $(function() {
                     if(response.exists == true) {
                         $companyExistsDiv.removeClass('hide');
                         $companyExistsDiv.html('<div class="info-block mbot15">'+response.message+'</div>');
+                        
+                        $('.client-form').submit(function(e){
+                            e.preventDefault();
+                            alert("This company name is already exist, please choose other");
+                        })
+
                     } else {
                         $companyExistsDiv.addClass('hide');
                     }
                 }
             });
         });
+
+        // VM-LK 2020-05-27
+        $('#siret').on('keyup', function() {
+            var siret = $(this).val();
+            var $siretExistsDiv = $('#siret_exists_info');
+
+            if(siret == '') {
+                $siretExistsDiv.addClass('hide');
+                return;
+            }
+
+            $.post(admin_url+'clients/check_duplicate_siret', {siret:siret})
+            .done(function(response) {
+                if(response) {
+                    response = JSON.parse(response);
+                    if(response.exists == true) {
+                        $siretExistsDiv.removeClass('hide');
+                        $siretExistsDiv.html('<div class="info-block mbot15">'+response.message+'</div>');
+                    } else {
+                        $siretExistsDiv.addClass('hide');
+                    }
+                }
+            });
+        });
+        // VM-LK 2020-05-27
     }
 
     $('.billing-same-as-customer').on('click', function(e) {

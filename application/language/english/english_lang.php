@@ -68,6 +68,9 @@ $lang['client_firstname']                        = 'First Name';
 $lang['client_lastname']                         = 'Last Name';
 $lang['client_email']                            = 'Email';
 $lang['client_company']                          = 'Company';
+
+$lang['client_siret']                          = 'SIRET Number';
+
 $lang['client_vat_number']                       = 'VAT Number';
 $lang['client_address']                          = 'Address';
 $lang['client_city']                             = 'City';
@@ -1776,6 +1779,7 @@ $lang['ticket_pipe_status']   = 'Status';
 # Home
 $lang['home_latest_activity']   = 'Latest Activity';
 $lang['home_my_tasks']          = 'My Tasks';
+$lang['home_latest_activity']   = 'Latest Activity';
 $lang['home_my_todo_items']     = 'My To Do Items';
 $lang['home_widget_view_all']   = 'View All';
 $lang['home_stats_full_report'] = 'Full Report';
@@ -2065,8 +2069,8 @@ $lang['project_rate_per_hour']                               = 'Rate Per Hour';
 $lang['project_total_cost']                                  = 'Total Rate';
 $lang['project_members']                                     = 'Members';
 $lang['project_member_removed']                              = 'Project member removed successfully';
-$lang['project_overview']                                    = 'Overview';
-$lang['project_gant']                                        = 'Gantt';
+$lang['project_overview']                                    = 'Project Overview';
+$lang['project_gant']                                        = 'Gantt View';
 $lang['project_milestones']                                  = 'Milestones';
 $lang['project_milestone_order']                             = 'Order';
 $lang['project_milestone_duedate_passed']                    = 'Due date passed';
@@ -2751,6 +2755,7 @@ $lang['show_pay_link_to_invoice_pdf']                = 'Show Pay Invoice link to
 $lang['no_leads_found']                              = 'No Leads Found';
 $lang['created_today']                               = 'Created Today';
 $lang['total_tasks_deleted']                         = 'Total Tasks Deleted: %s';
+$lang['total_tickets_delete']                        = 'Total Tickets Deleted: %s';
 $lang['total_tickets_delete']                        = 'Total Tickets Deleted: %s';
 $lang['format_letter_portrait']                      = 'Letter Portrait';
 $lang['format_letter_landscape']                     = 'Letter Landscape';
@@ -3444,6 +3449,7 @@ $lang['view_consent']                                           = 'View Consent'
 $lang['transfer_consent']                                       = 'Transfer Consent';
 $lang['view_public_form']                                       = 'View Public Form';
 $lang['update_consent']                                         = 'Update Consent';
+$lang['update_consent']                                         = 'Update Consent';
 $lang['consent_last_updated']                                   = 'Last Updated: %s';
 $lang['showing_search_result']                                  = 'Showing search results for: %s';
 $lang['per_page']                                               = 'Per Page';
@@ -3515,6 +3521,9 @@ $lang['google_api_client_id']                                        = 'Google A
 $lang['subtract_tax_total_from_amount']                              = 'Subtract TAX total (%s) from amount';
 $lang['expense_subtract_info_text']                                  = 'Use this option to subtract the total tax amount from the expense amount, useful when you entered the expense amount with tax included (tax inclusive).';
 $lang['company_exists_info']                                         = 'It looks that a customer with name %s already exists, if you still want to create the customer you can ignore this message.';
+
+$lang['siret_exists_info']                                         = 'It looks that a SIRET Number %s already exists, if you still want to create the customer you can ignore this message.';
+
 $lang['import_items']                                                = 'Import Items';
 $lang['total_items_deleted']                                         = 'Total items deleted: %s';
 $lang['billable_amount']                                             = 'Billable Amount';
@@ -3618,21 +3627,3 @@ $lang['schedule_email_for']             = 'Schedule Email for %s';
 $lang['schedule_date']                  = 'When would you like to send the email?';
 $lang['email_scheduled_successfully']   = 'Email scheduled successfully';
 $lang['invoice_will_be_sent_at']        = 'Invoice will be sent at %s';
-
-# Version 2.5.0
-$lang['recaptcha_ignore_ips']               = 'Ignored IP Addresses';
-$lang['recaptcha_ignore_ips_info']          = 'Enter coma separated IP addresses that you want the reCaptcha to skip validation.';
-$lang['show_task_reminders_on_calendar']    = 'Task Reminders';
-$lang['contracts_about_to_expire']          = 'Contracts Expiring Soon';
-$lang['no_contracts_about_to_expire']       = 'There are no contracts that are going to expire in the next %s days.';
-$lang['lead_value']                         = 'Lead value';
-$lang['lead_value_tooltip']                 = 'Base currency will be used.';
-$lang['leads_dt_lead_value']                = 'Lead Value';
-$lang['leads_canban_lead_value']            = 'Lead Value: %s';
-$lang['lead_add_edit_lead_value']           = 'Lead Value';
-
-# Version 2.6.0
-$lang['gantt_view_day'] = 'Days View';
-$lang['gantt_view_week'] = 'Weeks View';
-$lang['gantt_view_month'] = 'Months View';
-$lang['gantt_view_year'] = 'Years View';

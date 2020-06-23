@@ -62,8 +62,8 @@ class Clients_model extends App_Model
         if ($customer_id != '') {
             $this->db->where('userid', $customer_id);
         }
-
         $this->db->order_by('is_primary', 'DESC');
+
         return $this->db->get(db_prefix() . 'contacts')->result_array();
     }
 

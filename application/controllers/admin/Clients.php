@@ -282,6 +282,21 @@ class Clients extends AdminController
         }
     }
 
+    //VM-LK 2020-05-27
+    // Used to give a tip to the user if the SIRET exists when new SIRET is created
+    public function check_duplicate_siret()
+    {
+        if (has_permission('customers', '', 'create')) {
+            $siret = trim($this->input->post('siret'));
+            $response    = [
+                'exists'  => (bool) total_rows(db_prefix() . 'clients', ['siret' => $siret]) > 0,
+                'message' => _l('siret_exists_info', '<b>' . $siret . '</b>'),
+            ];
+            echo json_encode($response);
+        }
+    }
+    //VM-LK 2020-05-27
+
     public function save_longitude_and_latitude($client_id)
     {
         if (!has_permission('customers', '', 'edit')) {

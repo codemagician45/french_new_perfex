@@ -146,6 +146,11 @@
                      $selected =( isset($client) ? $client->country : $customer_default_country);
                      echo render_select( 'country',$countries,array( 'country_id',array( 'short_name')), 'clients_country',$selected,array('data-none-selected-text'=>_l('dropdown_non_selected_tex')));
                      ?>
+                  <!-- VM 20-05-26 -->
+                  <?php $value=( isset($client) ? $client->siret : ''); ?>
+                  <?php echo render_input( 'siret', 'client_siret',$value); ?>
+                  <div id="siret_exists_info" class="hide"></div>
+                  <!-- VM 20-05-26 -->
                </div>
             </div>
          </div>

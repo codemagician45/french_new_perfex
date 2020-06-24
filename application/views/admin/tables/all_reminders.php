@@ -1,7 +1,8 @@
 <?php
 
 defined('BASEPATH') or exit('No direct script access allowed');
-
+$statuses              = $this->ci->misc_model->get_reminder_status();
+$locked = false;
 $aColumns = [
     'CASE ' . db_prefix() . 'reminders.rel_type
         WHEN \'customer\' THEN ' . db_prefix() . 'clients.company
@@ -18,7 +19,7 @@ $aColumns = [
     db_prefix() . 'reminders.date',
     'CONCAT(firstname, " ", lastname) as full_name',
     'isnotified',
-    db_prefix().'reminders.status'
+    db_prefix() . 'reminders_status.name as status_name'
     ];
 
 $sIndexColumn = 'id';
@@ -39,20 +40,24 @@ $join = [
     'LEFT JOIN ' . db_prefix() . 'creditnotes ON ' . db_prefix() . 'creditnotes.id = ' . db_prefix() . 'reminders.rel_id AND ' . db_prefix() . 'reminders.rel_type="credit_note"',
     'LEFT JOIN ' . db_prefix() . 'tickets ON ' . db_prefix() . 'tickets.ticketid = ' . db_prefix() . 'reminders.rel_id AND ' . db_prefix() . 'reminders.rel_type="ticket"',
     'LEFT JOIN ' . db_prefix() . 'tasks ON ' . db_prefix() . 'tasks.id = ' . db_prefix() . 'reminders.rel_id AND ' . db_prefix() . 'reminders.rel_type="task"',
+    'LEFT JOIN ' . db_prefix() . 'reminders_status ON ' . db_prefix() . 'reminders_status.id = ' . db_prefix() . 'reminders.status',
     ];
 
-$result = data_tables_init($aColumns, $sIndexColumn, $sTable, $join, $where, [
+$additionalColumns = hooks()->apply_filters('reminders_table_additional_columns_sql', [
     db_prefix() . 'reminders.id',
     db_prefix() . 'reminders.creator',
     db_prefix() . 'reminders.rel_type',
     db_prefix() . 'reminders.rel_id',
-    ]);
+    'color',
+    db_prefix() . 'reminders.status',
+]);
+
+$result = data_tables_init($aColumns, $sIndexColumn, $sTable, $join, $where,$additionalColumns);
 
 $output  = $result['output'];
 $rResult = $result['rResult'];
 // print_r($rResult);
 // print_r($aColumns);
-//  exit();
 foreach ($rResult as $aRow) {
     $row = [];
     for ($i = 0; $i < count($aColumns); $i++) {
@@ -85,6 +90,29 @@ foreach ($rResult as $aRow) {
             } else {
                 $_data = _l('reminder_is_notified_boolean_no');
             }
+        }
+        elseif($aColumns[$i] == db_prefix() . 'reminders_status.name as status_name'){
+            $_data = '<span class="inline-block reminder-status-'.$aRow['status'].' label label-' . (empty($aRow['color']) ? 'default': '') . '" style="color:' . $aRow['color'] . ';border:1px solid ' . $aRow['color'] . '">' . $aRow['status_name'];
+            if (!$locked) {
+                $_data .= '<div class="dropdown inline-block mleft5 table-export-exclude">';
+                $_data .= '<a href="#" style="font-size:14px;vertical-align:middle;" class="dropdown-toggle text-dark" id="tableremindersStatus-' . $aRow['id'] . '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                $_data .= '<span data-toggle="tooltip" title="' . _l('ticket_single_change_status') . '"><i class="fa fa-caret-down" aria-hidden="true"></i></span>';
+                $_data .= '</a>';
+
+                $_data .= '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="tableremindersStatus-' . $aRow['id'] . '">';
+                foreach ($statuses as $reminderChangeStatus) {
+                    if ($aRow['status'] != $reminderChangeStatus['id']) {
+                        $_data .= '<li>
+                      <a href="#" onclick="reminder_mark_as(' . $reminderChangeStatus['id'] . ',' . $aRow['id'] . '); return false;">
+                         ' . $reminderChangeStatus['name'] . '
+                      </a>
+                   </li>';
+                    }
+                }
+                $_data .= '</ul>';
+                $_data .= '</div>';
+            }
+            $_data .= '</span>';
         }
         $row[] = $_data;
 

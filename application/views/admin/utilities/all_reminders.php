@@ -35,9 +35,19 @@
     ); ?>
 <?php init_tail(); ?>
 <script>
-        $(function(){
-            initDataTable('.table-reminders', admin_url + 'misc/reminders_table', undefined, undefined, undefined, [2,'asc']);
+    $(function(){
+        initDataTable('.table-reminders', admin_url + 'misc/reminders_table', undefined, undefined, undefined, [2,'asc']);
+    });
+
+    function reminder_mark_as(status_id, reminder_id) {
+        var data = {};
+        var table_reminders = $('table.table-reminders');
+        data.status = status_id;
+        data.reminderid = reminder_id;
+        $.post(admin_url + 'misc/update_reminder_status', data).done(function(response) {
+            table_reminders.DataTable().ajax.reload(null, false);
         });
-    </script>
+    }
+</script>
 </body>
 </html>

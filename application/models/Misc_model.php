@@ -349,6 +349,73 @@ class Misc_model extends App_Model
         return false;
     }
 
+    public function update_reminder_status_on_reminder($data)
+    {
+        // print_r($data); exit();
+        $this->db->select('status');
+        $this->db->where('id', $data['reminderid']);
+        $_old = $this->db->get(db_prefix() . 'reminders')->row();
+
+        $old_status = '';
+
+        if ($_old) {
+            $old_status = $this->get_reminder_status($_old->status);
+            if ($old_status) {
+                $old_status = $old_status->name;
+            }
+        }
+
+        $affectedRows   = 0;
+        $current_status = $this->get_reminder_status($data['status'])->name;
+
+        $this->db->where('id', $data['reminderid']);
+        $this->db->update(db_prefix() . 'reminders', [
+            'status' => $data['status'],
+        ]);
+
+        $_log_message = '';
+
+        if ($this->db->affected_rows() > 0) {
+            $affectedRows++;
+            if ($current_status != $old_status && $old_status != '') {
+                $_log_message    = 'not_reminder_activity_status_updated';
+                $additional_data = serialize([
+                    get_staff_full_name(),
+                    $old_status,
+                    $current_status,
+                ]);
+
+                hooks()->do_action('reminder_status_changed', [
+                    'reminder_id'    => $data['reminderid'],
+                    'old_status' => $old_status,
+                    'new_status' => $current_status,
+                ]);
+            }
+            $this->db->where('id', $data['reminderid']);
+            $this->db->update(db_prefix() . 'reminders', [
+                'last_status_change' => date('Y-m-d H:i:s'),
+            ]);
+        }
+        if (isset($data['order'])) {
+            foreach ($data['order'] as $order_data) {
+                $this->db->where('id', $order_data[0]);
+                $this->db->update(db_prefix() . 'reminders', [
+                    'reminderorder' => $order_data[1],
+                ]);
+            }
+        }
+        if ($affectedRows > 0) {
+            if ($_log_message == '') {
+                return true;
+            }
+            // $this->log_reminder_activity($data['reminderid'], $_log_message, false, $additional_data);
+
+            return true;
+        }
+
+        return false;
+    }
+
     public function get_notes($rel_id, $rel_type)
     {
         $this->db->join(db_prefix() . 'staff', db_prefix() . 'staff.staffid=' . db_prefix() . 'notes.addedfrom');

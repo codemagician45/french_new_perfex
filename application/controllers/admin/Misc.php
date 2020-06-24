@@ -345,6 +345,12 @@ class Misc extends AdminController
         redirect(admin_url('misc/reminder_statuses'));
     }
 
+    public function update_reminder_status(){
+        if ($this->input->post() && $this->input->is_ajax_request()) {
+            $this->misc_model->update_reminder_status_on_reminder($this->input->post());
+        }
+    }
+
     public function run_cron_manually()
     {
         if (is_admin()) {

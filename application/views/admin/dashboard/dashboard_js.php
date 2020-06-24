@@ -230,4 +230,13 @@
 
         }
     }
+    function reminder_mark_as(status_id, reminder_id) {
+        var data = {};
+        var table_reminders = $('table.table-my-reminders');
+        data.status = status_id;
+        data.reminderid = reminder_id;
+        $.post(admin_url + 'misc/update_reminder_status', data).done(function(response) {
+            table_reminders.DataTable().ajax.reload(null, false);
+        });
+    }
 </script>

@@ -192,16 +192,22 @@ $(function() {
                 if(response) {
                     response = JSON.parse(response);
                     if(response.exists == true) {
+                        console.log(response.exists)
                         $companyExistsDiv.removeClass('hide');
                         $companyExistsDiv.html('<div class="info-block mbot15">'+response.message+'</div>');
-                        
-                        $('.client-form').submit(function(e){
-                            e.preventDefault();
-                            alert("This company name is already exist, please choose other");
-                        })
+    
+                        // $('.client-form').submit(function(e){
+                        //     if(response.exists == true){
+                        //         e.preventDefault();
+                        //         alert("This company name is already exist, please choose other");
+                        //     }
+                            
+                        // })
+                        $('.customer-form-submiter').prop('disabled',true);
 
                     } else {
                         $companyExistsDiv.addClass('hide');
+                        $('.customer-form-submiter').prop('disabled',false);
                     }
                 }
             });
@@ -224,8 +230,10 @@ $(function() {
                     if(response.exists == true) {
                         $siretExistsDiv.removeClass('hide');
                         $siretExistsDiv.html('<div class="info-block mbot15">'+response.message+'</div>');
+                        $('.customer-form-submiter').prop('disabled',true);
                     } else {
                         $siretExistsDiv.addClass('hide');
+                        $('.customer-form-submiter').prop('disabled',false);
                     }
                 }
             });

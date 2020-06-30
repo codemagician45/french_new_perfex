@@ -3640,3 +3640,8 @@ $lang['reminder_status']        = 'Status';
 $lang['reminders_table_total']        = 'Total Reminders: %s';
 $lang['reminder_status_lowercase']        = 'reminder status';
 
+$lang['sucessful_signature']        = 'Successful Signature!';
+$lang['signed_document']        = 'Signed Document';
+$lang['document']        = 'Document';
+$lang['hand']        = 'Hand';
+

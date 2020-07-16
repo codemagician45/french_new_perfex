@@ -12,6 +12,7 @@ class Authentication extends ClientsController
 
     public function index()
     {
+
         $this->login();
     }
 
@@ -24,6 +25,7 @@ class Authentication extends ClientsController
     public function login()
     {
         if (is_client_logged_in()) {
+
             redirect(site_url());
         }
 

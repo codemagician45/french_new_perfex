@@ -186,6 +186,8 @@ $route['survey/(:num)/(:any)'] = 'surveys/participate/index/$1/$2';
 
 $route['admin/reminders/statuses'] = 'admin/reminders/statuses';
 
+$route['pdf/(:any)'] = "pdf/index/$1";
+
 if (file_exists(APPPATH . 'config/my_routes.php')) {
     include_once(APPPATH . 'config/my_routes.php');
 }

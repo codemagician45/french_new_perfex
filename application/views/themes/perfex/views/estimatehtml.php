@@ -1,4 +1,99 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<?php //print_r($estimate); exit(); ?>
+<style type="text/css">
+   .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+     
+  }
+
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  .msg_info {
+    color: #6a912d;
+    border: 1px solid #6a912d;
+    background-color: #F1F5EC;
+    }
+  .msg_error, .msg_info {
+    text-align: center;
+    width: auto;
+    display: block;
+    font-size: 13px;
+    /*margin: 20px auto;*/
+    padding: 10px;
+    width: 75%;
+    line-height: 25px;
+  }
+
+  .msg_error {
+    color: #E85911;
+    border: 1px solid #E85911;
+    background-color: #FBE1D4;
+  }
+  .msg_error, .msg_info {
+    text-align: center;
+    width: auto;
+    display: block;
+    font-size: 13px;
+    margin: 20px auto;
+    padding: 10px;
+    width: 75%;
+    line-height: 25px;
+  }
+</style>
 <div class="mtop15 preview-top-wrapper">
    <div class="row">
       <div class="col-md-3">
@@ -61,10 +156,17 @@
                   }
                   ?>
                <?php echo form_open($this->uri->uri_string(), array('class'=>'pull-right action-button')); ?>
-               <button type="submit" name="estimatepdf" class="btn btn-default action-button download mright5 mtop7" value="estimatepdf">
+               <!-- <button type="submit" name="estimatepdf" class="btn btn-default action-button download mright5 mtop7" value="estimatepdf">
                <i class="fa fa-file-pdf-o"></i>
-               <?php echo _l('clients_invoice_html_btn_download'); ?>
+               <?php echo _l('clients_invoice_html_btn_view'); ?>
+               </button> -->
+               <?php if($estimate->signed_pdf != null) {?>
+               <a href="<?php echo base_url($estimate->signed_pdf)?>" target="_blank"><button type="button" class="btn btn-default action-button download mright5 mtop7">
+               <i class="fa fa-file-pdf-o"></i>
+               <?php echo _l('clients_invoice_html_btn_view'); ?>
                </button>
+                </a>
+                <?php }?>
                <?php echo form_close(); ?>
                <?php if(is_client_logged_in() && has_contact_permission('estimates')){ ?>
                <a href="<?php echo site_url('clients/estimates/'); ?>" class="btn btn-default pull-right mright5 mtop7 action-button go-to-portal">
@@ -238,6 +340,27 @@
             </div>
             <?php } ?>
          </div>
+         <div class="row">
+            <div id="res-success" class="hidden msg_info result" style="float: right;">
+                <?php echo _l('sucessful_signature')?><br/>
+                <!-- <?php echo _l('download')?><a href="<?php echo base_url('estimate/download_pdf/'.$estimate->id.'/'.$estimate->hash)?>"> -->
+                <a href="<?php echo base_url('estimate/download_pdf/'.$estimate->id.'/'.$estimate->hash)?>">
+                <button type="button" name="estimatepdf" class="btn btn-default action-button download mright5 mtop7" value="estimatepdf">
+                   <i class="fa fa-file-pdf-o"></i>
+                   <?php echo _l('clients_invoice_html_btn_download'); ?>
+                </button>
+                </a>  
+               <!-- <?php echo _l('signed_document')?></a><br/> -->
+            </div>
+
+            <div id="res-cancel" class="hidden msg_error result">
+                <?php echo _l('cancel_signature')?><br/>
+            </div>
+
+            <div id="res-fail" class="hidden msg_error result">
+                <?php echo _l('fail_signature')?><br/>
+            </div>
+         </div>
       </div>
    </div>
 </div>
@@ -247,6 +370,19 @@
    }
    ?>
 <script>
+   $(document).ready(function() {
+       var loc = document.location.href;
+       if (loc.indexOf("?id=") != -1) {
+           //check the result
+           if (loc.indexOf("id=success") != -1) {
+               $('#res-success').removeClass('hidden');
+           } else if (loc.indexOf("id=cancel") != -1) {
+               $('#res-cancel').removeClass('hidden');
+           } else {
+               $('#res-fail').removeClass('hidden');
+           }
+       }
+   });
    $(function(){
      new Sticky('[data-sticky]');
    })

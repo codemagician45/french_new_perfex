@@ -74,8 +74,10 @@ define('APP_DB_COLLATION', 'utf8_general_ci');
  * In case you are having problem with the SESS_SAVE_PATH consult with your hosting provider to set "session.save_path" value to php.ini
  *
  */
-define('SESS_DRIVER', 'database');
-define('SESS_SAVE_PATH', 'sessions');
+// define('SESS_DRIVER', 'database');
+// define('SESS_SAVE_PATH', NULL);
+define('SESS_DRIVER', 'files');
+define('SESS_SAVE_PATH', BASEPATH.'/sessions');
 
 /**
  * Enables CSRF Protection

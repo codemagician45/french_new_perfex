@@ -343,3 +343,29 @@
   </div>
 </div>
 <?php hooks()->do_action('lead_modal_profile_bottom',(isset($lead) ? $lead->id : '')); ?>
+<script type="text/javascript">
+  $('#siret').on('keyup', function() {
+    var siret = $(this).val();
+    var $siretExistsDiv = $('#siret_exists_info');
+
+    if(siret == '') {
+        $siretExistsDiv.addClass('hide');
+        return;
+    }
+
+    $.post(admin_url+'clients/check_duplicate_siret', {siret:siret})
+    .done(function(response) {
+        if(response) {
+            response = JSON.parse(response);
+            if(response.exists == true) {
+                $siretExistsDiv.removeClass('hide');
+                $siretExistsDiv.html('<div class="info-block mbot15">'+response.message+'</div>');
+                $('#lead-form-submit').prop('disabled',true);
+            } else {
+                $siretExistsDiv.addClass('hide');
+                $('#lead-form-submit').prop('disabled',false);
+            }
+        }
+    });
+});
+</script>

@@ -42,6 +42,11 @@
            echo render_select( 'country',$countries,array( 'country_id',array( 'short_name')), 'clients_country',$selected,array('data-none-selected-text'=>_l('dropdown_non_selected_tex')));
            ?>
            <?php echo render_input('zip','clients_zip',$lead->zip); ?>
+
+           <?php $value=( isset($lead) ? $lead->siret : ''); ?>
+             <?php echo render_input( 'siret', 'client_siret',$value); ?>
+             <div id="siret_exists_info" class="hide"></div>
+          
            <?php
            $not_mergable_customer_fields  = array('userid','datecreated','leadid','default_language','default_currency','active');
            $not_mergable_contact_fields  = array('id','userid','datecreated','is_primary','password','new_pass_key','new_pass_key_requested','last_ip','last_login','last_password_change','active','profile_image','direction');

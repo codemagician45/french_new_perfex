@@ -20,6 +20,7 @@ class Proposal_pdf extends App_pdf
         $this->tag      = $tag;
         $this->proposal = $proposal;
 
+        
         $this->proposal_number = format_proposal_number($this->proposal->id);
 
         if ($proposal->rel_id != null && $proposal->rel_type == 'customer') {

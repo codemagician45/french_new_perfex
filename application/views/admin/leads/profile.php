@@ -300,7 +300,8 @@
                </label>
             </div>
             <?php $value = (isset($lead) ? $lead->company : ''); ?>
-            <?php echo render_input('company','lead_company',$value); ?>
+            <?php echo render_input('company','lead_company',$value,'text',array('required' => true)); ?>
+            <div id="company_exists_info" class="hide"></div>
          </div>
          <div class="col-md-6">
             <?php $value = (isset($lead) ? $lead->address : ''); ?>

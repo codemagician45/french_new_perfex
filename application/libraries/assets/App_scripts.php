@@ -8,6 +8,7 @@ class App_scripts extends App_assets
 {
     public function add($name, $data, $group = 'admin', $deps = [])
     {
+        // print_r($data); echo '<br>';
         if (isset($this->registered[$group][$name])) {
             return false;
         }

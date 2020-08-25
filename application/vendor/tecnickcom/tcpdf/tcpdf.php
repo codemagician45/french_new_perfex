@@ -16972,7 +16972,9 @@ class TCPDF {
 						$dom[$key]['trids'] = array(); // IDs of TR elements
 						$dom[$key]['thead'] = ''; // table header rows
 					}
+					// print_r($dom[$key]['value']);
 					if (($dom[$key]['value'] == 'tr')) {
+						echo 'tr';
 						$dom[$key]['cols'] = 0;
 						if ($thead) {
 							$dom[$key]['thead'] = true;
@@ -16985,12 +16987,15 @@ class TCPDF {
 							array_push($dom[($dom[$key]['parent'])]['trids'], $key);
 						}
 					}
+
 					if (($dom[$key]['value'] == 'th') OR ($dom[$key]['value'] == 'td')) {
+
 						if (isset($dom[$key]['attribute']['colspan'])) {
 							$colspan = intval($dom[$key]['attribute']['colspan']);
 						} else {
 							$colspan = 1;
 						}
+						// print_r($dom[($dom[$key]['parent'])]['cols']);
 						$dom[$key]['attribute']['colspan'] = $colspan;
 						$dom[($dom[$key]['parent'])]['cols'] += $colspan;
 					}

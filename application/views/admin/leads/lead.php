@@ -344,6 +344,7 @@
 </div>
 <?php hooks()->do_action('lead_modal_profile_bottom',(isset($lead) ? $lead->id : '')); ?>
 <script type="text/javascript">
+
   $('#siret').on('keyup', function() {
     var siret = $(this).val();
     var $siretExistsDiv = $('#siret_exists_info');
@@ -353,7 +354,7 @@
         return;
     }
 
-    $.post(admin_url+'clients/check_duplicate_siret', {siret:siret})
+    $.post(admin_url+'leads/check_duplicate_siret', {siret:siret})
     .done(function(response) {
         if(response) {
             response = JSON.parse(response);
@@ -363,6 +364,33 @@
                 $('#lead-form-submit').prop('disabled',true);
             } else {
                 $siretExistsDiv.addClass('hide');
+                $('#lead-form-submit').prop('disabled',false);
+            }
+        }
+    });
+});
+
+$('#company').on('keyup', function() {
+    var company = $(this).val();
+    var $companyExistsDiv = $('#company_exists_info');
+
+    if(company == '') {
+        $companyExistsDiv.addClass('hide');
+        return;
+    }
+
+    $.post(admin_url+'leads/check_duplicate_lead_name', {company:company})
+    .done(function(response) {
+        if(response) {
+            response = JSON.parse(response);
+            if(response.exists == true) {
+                console.log(response.exists)
+                $companyExistsDiv.removeClass('hide');
+                $companyExistsDiv.html('<div class="info-block mbot15">'+response.message+'</div>');
+                $('#lead-form-submit').prop('disabled',true);
+
+            } else {
+                $companyExistsDiv.addClass('hide');
                 $('#lead-form-submit').prop('disabled',false);
             }
         }

@@ -1006,7 +1006,6 @@ class Proposals_model extends App_Model
         }
 
         $proposal = $this->get($id);
-
         $sent = send_mail_template('proposal_send_to_customer', $proposal, $attachpdf, $cc);
 
         if ($sent) {

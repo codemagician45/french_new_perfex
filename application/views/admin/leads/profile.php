@@ -338,7 +338,7 @@
             <?php } ?>
 
              <?php $value=( isset($lead) ? $lead->siret : ''); ?>
-             <?php echo render_input( 'siret', 'client_siret',$value); ?>
+             <?php echo render_input( 'siret', 'client_siret',$value,'', array('required' => true)); ?>
              <div id="siret_exists_info" class="hide"></div>
          </div>
          <div class="col-md-12">

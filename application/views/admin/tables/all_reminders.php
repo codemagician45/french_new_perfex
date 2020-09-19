@@ -56,8 +56,6 @@ $result = data_tables_init($aColumns, $sIndexColumn, $sTable, $join, $where,$add
 
 $output  = $result['output'];
 $rResult = $result['rResult'];
-// print_r($rResult);
-// print_r($aColumns);
 foreach ($rResult as $aRow) {
     $row = [];
     for ($i = 0; $i < count($aColumns); $i++) {

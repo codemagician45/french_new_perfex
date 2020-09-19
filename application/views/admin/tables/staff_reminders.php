@@ -17,13 +17,15 @@ $aColumns = [
         ELSE ' . db_prefix() . 'reminders.rel_type END as rel_type_name',
     db_prefix() . 'reminders.description',
     db_prefix() . 'reminders.date',
-    db_prefix() . 'reminders_status.name as status_name'
+    db_prefix() . 'reminders_status.name as status_name',
+    'isnotified',
     ];
 
 $sIndexColumn = 'id';
 
 $sTable = db_prefix() . 'reminders';
-$where  = ['AND staff = ' . get_staff_user_id() . ' AND isnotified = 0'];
+// $where  = ['AND staff = ' . get_staff_user_id() . ' AND isnotified = 0'];
+$where  = ['AND staff = ' . get_staff_user_id()];
 
 $join = [
     'LEFT JOIN ' . db_prefix() . 'clients ON ' . db_prefix() . 'clients.userid = ' . db_prefix() . 'reminders.rel_id AND ' . db_prefix() . 'reminders.rel_type="customer"',
@@ -71,6 +73,12 @@ foreach ($rResult as $aRow) {
                 $_data .= '<div class="row-options">';
                 $_data .= '<a href="' . admin_url('misc/delete_reminder/' . $aRow['rel_id'] . '/' . $aRow['id'] . '/' . $aRow['rel_type']) . '" class="text-danger delete-reminder">' . _l('delete') . '</a>';
                 $_data .= '</div>';
+            }
+        } elseif ($aColumns[$i] == 'isnotified') {
+            if ($_data == 1) {
+                $_data = _l('reminder_is_notified_boolean_yes');
+            } else {
+                $_data = _l('reminder_is_notified_boolean_no');
             }
         }
 

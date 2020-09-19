@@ -24,7 +24,7 @@
                      <?php
                         $total_reminders = total_rows(db_prefix().'reminders',
                           array(
-                           'isnotified'=>0,
+                           // 'isnotified'=>0,
                            'staff'=>get_staff_user_id(),
                         )
                         );
@@ -114,6 +114,7 @@
                         _l('reminder_description'),
                         _l( 'reminder_date'),
                         _l( 'reminder_status'),
+                        _l( 'reminder_is_notified'),
                         ), 'my-reminders'); ?>
                   </div>
                   <?php if(is_staff_member()){ ?>

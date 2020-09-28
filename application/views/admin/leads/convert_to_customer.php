@@ -190,4 +190,21 @@
 <script>
    validate_lead_convert_to_client_form();
    init_selectpicker();
+   // $('#lead_to_client_form').submit(function(e){
+   //    e.preventDefault();
+   //    var siret = $('#siret').val();
+   //    $.post(admin_url+'clients/check_duplicate_siret', {siret:siret})
+   //      .done(function(response) {
+   //          if(response) {
+   //              response = JSON.parse(response);
+   //              console.log(response)
+   //              if(response.exists == true) {
+   //                  alert('Un client avec ce numéro de SIRET existe déjà dans la base');
+   //              } else {
+   //                $('#lead_to_client_form')[0].submit();
+   //              }
+   //          }
+   //      });
+   //    // $('#lead_to_client_form')[0].submit();
+   // })
 </script>

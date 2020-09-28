@@ -263,6 +263,9 @@
          <hr class="no-mtop mbot15" />
 
          <div class="col-md-6">
+            <?php $value = (isset($lead) ? $lead->company : ''); ?>
+            <?php echo render_input('company','lead_company',$value,'text',array('required' => true)); ?>
+            <div id="company_exists_info" class="hide"></div>
             <?php $value = (isset($lead) ? $lead->name : ''); ?>
             <?php echo render_input('name','lead_add_edit_name',$value); ?>
             <?php $value = (isset($lead) ? $lead->title : ''); ?>
@@ -299,9 +302,7 @@
                 </div>
                </label>
             </div>
-            <?php $value = (isset($lead) ? $lead->company : ''); ?>
-            <?php echo render_input('company','lead_company',$value,'text',array('required' => true)); ?>
-            <div id="company_exists_info" class="hide"></div>
+            
          </div>
          <div class="col-md-6">
             <?php $value = (isset($lead) ? $lead->address : ''); ?>

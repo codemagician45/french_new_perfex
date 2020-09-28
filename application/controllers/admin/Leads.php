@@ -1278,7 +1278,7 @@ class Leads extends AdminController
     {
            $companyName = trim($this->input->post('company'));
             $response    = [
-                'exists'  => (bool) total_rows(db_prefix() . 'leads', ['company' => $companyName]) > 0,
+                'exists'  => (bool) (total_rows(db_prefix() . 'leads', ['company' => $companyName]) > 0||total_rows(db_prefix() . 'clients', ['company' => $companyName]) > 0),
                 'message' => _l('company_exists_info', '<b>' . $companyName . '</b>'),
             ];
             echo json_encode($response);
@@ -1289,7 +1289,7 @@ class Leads extends AdminController
     {
             $siret = trim($this->input->post('siret'));
             $response    = [
-                'exists'  => (bool) total_rows(db_prefix() . 'leads', ['siret' => $siret]) > 0,
+                'exists'  => (bool) (total_rows(db_prefix() . 'leads', ['siret' => $siret]) > 0 || total_rows(db_prefix() . 'clients', ['siret' => $siret]) > 0),
                 'message' => _l('siret_exists_info', '<b>' . $siret . '</b>'),
             ];
             echo json_encode($response);

@@ -220,9 +220,9 @@
                                  'th_attrs'=>array('class'=>'toggleable', 'id'=>'th-number')
                                ),
                                 array(
-                                 'name'=>_l('leads_dt_name'),
-                                 'th_attrs'=>array('class'=>'toggleable', 'id'=>'th-name')
-                               ),
+                               'name'=>_l('lead_company'),
+                               'th_attrs'=>array('class'=>'toggleable', 'id'=>'th-company')
+                              ),
                               );
                               if(is_gdpr() && get_option('gdpr_enable_consent_for_leads') == '1') {
                                 $_table_data[] = array(
@@ -231,9 +231,9 @@
                                  );
                               }
                               $_table_data[] = array(
-                               'name'=>_l('lead_company'),
-                               'th_attrs'=>array('class'=>'toggleable', 'id'=>'th-company')
-                              );
+                                 'name'=>_l('leads_dt_name'),
+                                 'th_attrs'=>array('class'=>'toggleable', 'id'=>'th-name')
+                               );
                               $_table_data[] =   array(
                                'name'=>_l('leads_dt_email'),
                                'th_attrs'=>array('class'=>'toggleable', 'id'=>'th-email')

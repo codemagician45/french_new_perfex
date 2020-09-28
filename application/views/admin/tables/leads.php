@@ -120,7 +120,7 @@ foreach ($rResult as $aRow) {
     $hrefAttr = 'href="' . admin_url('leads/index/' . $aRow['id']) . '" onclick="init_lead(' . $aRow['id'] . ');return false;"';
     $row[]    = '<a ' . $hrefAttr . '>' . $aRow['id'] . '</a>';
 
-    $nameRow = '<a ' . $hrefAttr . '>' . $aRow['name'] . '</a>';
+    $nameRow = '<a ' . $hrefAttr . '>' . $aRow['company'] . '</a>';
 
     $nameRow .= '<div class="row-options">';
     $nameRow .= '<a ' . $hrefAttr . '>' . _l('view') . '</a>';
@@ -148,11 +148,11 @@ foreach ($rResult as $aRow) {
         $consents    = $this->ci->gdpr_model->get_consent_purposes($aRow['id'], 'lead');
 
         foreach ($consents as $consent) {
-            $consentHTML .= '<p style="margin-bottom:0px;">' . $consent['name'] . (!empty($consent['consent_given']) ? '<i class="fa fa-check text-success pull-right"></i>' : '<i class="fa fa-remove text-danger pull-right"></i>') . '</p>';
+            $consentHTML .= '<p style="margin-bottom:0px;">' . $consent['company'] . (!empty($consent['consent_given']) ? '<i class="fa fa-check text-success pull-right"></i>' : '<i class="fa fa-remove text-danger pull-right"></i>') . '</p>';
         }
         $row[] = $consentHTML;
     }
-    $row[] = $aRow['company'];
+    $row[] = $aRow['name'];
 
     $row[] = ($aRow['email'] != '' ? '<a href="mailto:' . $aRow['email'] . '">' . $aRow['email'] . '</a>' : '');
 

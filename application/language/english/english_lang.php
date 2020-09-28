@@ -3648,4 +3648,7 @@ $lang['document']        = 'Document';
 $lang['hand']        = 'Hand';
 $lang['clients_invoice_html_btn_view']        = 'View Signed Doc';
 
+$lang['old_my_reminders']        = 'My Old Reminders';
+$lang['next_my_reminders']        = 'My Next Reminders';
+
 

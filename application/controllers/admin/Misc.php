@@ -225,6 +225,21 @@ class Misc extends AdminController
         }
     }
 
+    public function my_old_reminders()
+    {
+        if ($this->input->is_ajax_request()) {
+            $this->app->get_table_data('staff_old_reminders');
+        }
+    }
+
+    public function my_next_reminders()
+    {
+        if ($this->input->is_ajax_request()) {
+            $this->app->get_table_data('staff_next_reminders');
+        }
+    }
+
+
     public function reminders()
     {
         $this->load->model('staff_model');

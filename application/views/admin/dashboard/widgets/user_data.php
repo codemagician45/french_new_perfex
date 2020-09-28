@@ -19,18 +19,34 @@
                      </a>
                   </li>
                   <li role="presentation">
-                     <a href="#home_my_reminders" onclick="initDataTable('.table-my-reminders', admin_url + 'misc/my_reminders', undefined, undefined,undefined,[2,'asc']);" aria-controls="home_my_reminders" role="tab" data-toggle="tab">
-                     <i class="fa fa-clock-o menu-icon"></i> <?php echo _l('my_reminders'); ?>
+                     <a href="#home_my_old_reminders" onclick="initDataTable('.table-my-old-reminders', admin_url + 'misc/my_old_reminders', undefined, undefined,undefined,[2,'asc']);" aria-controls="home_my_old_reminders" role="tab" data-toggle="tab">
+                     <i class="fa fa-clock-o menu-icon"></i> <?php echo _l('old_my_reminders'); ?>
                      <?php
-                        $total_reminders = total_rows(db_prefix().'reminders',
-                          array(
-                           // 'isnotified'=>0,
-                           'staff'=>get_staff_user_id(),
-                        )
-                        );
-                        if($total_reminders > 0){
-                          echo '<span class="badge">'.$total_reminders.'</span>';
-                        }
+                        // $total_reminders = total_rows(db_prefix().'reminders',
+                        //   array(
+                        //    // 'isnotified'=>0,
+                        //    'staff'=>get_staff_user_id(),
+                        // )
+                        // );
+                        // if($total_reminders > 0){
+                        //   echo '<span class="badge">'.$total_reminders.'</span>';
+                        // }
+                        ?>
+                     </a>
+                  </li>
+                  <li role="presentation">
+                     <a href="#home_my_next_reminders" onclick="initDataTable('.table-my-next-reminders', admin_url + 'misc/my_next_reminders', undefined, undefined,undefined,[2,'asc']);" aria-controls="home_my_next_reminders" role="tab" data-toggle="tab">
+                     <i class="fa fa-clock-o menu-icon"></i> <?php echo _l('next_my_reminders'); ?>
+                     <?php
+                        // $total_reminders = total_rows(db_prefix().'reminders',
+                        //   array(
+                        //    // 'isnotified'=>0,
+                        //    'staff'=>get_staff_user_id(),
+                        // )
+                        // );
+                        // if($total_reminders > 0){
+                        //   echo '<span class="badge">'.$total_reminders.'</span>';
+                        // }
                         ?>
                      </a>
                   </li>
@@ -105,7 +121,7 @@
                         ]);
                         ?>
                   </div>
-                  <div role="tabpanel" class="tab-pane" id="home_my_reminders">
+                  <div role="tabpanel" class="tab-pane" id="home_my_old_reminders">
                      <a href="<?php echo admin_url('misc/reminders'); ?>" class="mbot20 inline-block full-width">
                      <?php echo _l('home_widget_view_all'); ?>
                      </a>
@@ -115,7 +131,19 @@
                         _l( 'reminder_date'),
                         _l( 'reminder_status'),
                         _l( 'reminder_is_notified'),
-                        ), 'my-reminders'); ?>
+                        ), 'my-old-reminders'); ?>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="home_my_next_reminders">
+                     <a href="<?php echo admin_url('misc/reminders'); ?>" class="mbot20 inline-block full-width">
+                     <?php echo _l('home_widget_view_all'); ?>
+                     </a>
+                     <?php render_datatable(array(
+                        _l( 'reminder_related'),
+                        _l('reminder_description'),
+                        _l( 'reminder_date'),
+                        _l( 'reminder_status'),
+                        _l( 'reminder_is_notified'),
+                        ), 'my-next-reminders'); ?>
                   </div>
                   <?php if(is_staff_member()){ ?>
                   <div role="tabpanel" class="tab-pane" id="home_announcements">

@@ -1276,26 +1276,22 @@ class Leads extends AdminController
 
     public function check_duplicate_lead_name()
     {
-        if (has_permission('leads', '', 'create')) {
            $companyName = trim($this->input->post('company'));
             $response    = [
                 'exists'  => (bool) total_rows(db_prefix() . 'leads', ['company' => $companyName]) > 0,
                 'message' => _l('company_exists_info', '<b>' . $companyName . '</b>'),
             ];
             echo json_encode($response);
-        }
     }
 
     
     public function check_duplicate_siret()
     {
-        if (has_permission('leads', '', 'create')) {
             $siret = trim($this->input->post('siret'));
             $response    = [
                 'exists'  => (bool) total_rows(db_prefix() . 'leads', ['siret' => $siret]) > 0,
                 'message' => _l('siret_exists_info', '<b>' . $siret . '</b>'),
             ];
             echo json_encode($response);
-        }
     }
 }
